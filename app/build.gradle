@@ -1,0 +1,42 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+    defaultConfig {
+        applicationId "com.jadru.themebrowser"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 20
+        versionName "0.20 beta-20160322"
+    }
+    buildTypes {
+        release {
+            lintOptions {
+                disable 'MissingTranslation'
+            }
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/java']
+        }
+    }
+    productFlavors {
+    }
+}
+
+repositories {
+    mavenCentral() // jcenter() works as well because it pulls from Maven Central
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+}

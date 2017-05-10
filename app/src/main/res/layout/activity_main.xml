@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jadru.themebrowser.MainActivity">
+
+    <include layout="@layout/content_main" />
+
+    <LinearLayout
+        android:id="@+id/actionbtns"
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:layout_gravity="bottom">
+
+        <Button
+            android:id="@+id/btn_menu"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+
+        <Button
+            android:id="@+id/btn_tab"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginBottom="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginRight="20dp" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="28dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="84dp"
+                android:id="@+id/btn_url"
+                android:text="Title"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:textSize="13sp"
+                android:gravity="center" />
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_expand"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:padding="@dimen/fab_margin"
+        android:src="@drawable/whiteicmenu"/>
+
+</android.support.design.widget.CoordinatorLayout>

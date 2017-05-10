@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Searchengines">
+        <item>@string/array_setse_1</item>
+        <item>@string/array_setse_2</item>
+        <item>@string/array_setse_3</item>
+        <item>@string/array_setse_4</item>
+    </string-array>
+    <string-array name="Searchenginesdata">
+        <item>https://m.search.naver.com/search.naver?sm=mtb_hty.top<![CDATA["&"]]> where=m<![CDATA["&"]]>query=</item>
+        <item>https://www.google.co.kr/search?q=</item>
+        <item>http://search.daum.net/search?nil_suggest=btn<![CDATA["&"]]>w=tot<![CDATA["&"]]>DA=SBC<![CDATA["&"]]>q==</item>
+        <item>http://www.bing.com/search?q=</item>
+    </string-array>
+</resources>

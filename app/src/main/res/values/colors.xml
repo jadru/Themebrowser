@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4dd0e1</color>
+    <color name="colorPrimaryDark">#275f67</color>
+    <color name="colorAccent">#2598a7</color>
+    <color name="actionColor">#eaeaea</color>
+    <color name="titleColor">#464646</color>
+    <color name="editUrl">#FFFFFF</color>
+    <color name="editUrlPressed">#FFFFFF</color>
+    <color name="black">#4f4f4f</color>
+    <color name="white">#EBEBEB</color>
+    <color name="menu">#85FFFFFF</color>
+    <color name="Coloooor">#26c2bd</color>
+    <color name="colorBackground">#ebebeb</color>
+    <color name="popbg">#80FFFFFF</color>
+</resources>

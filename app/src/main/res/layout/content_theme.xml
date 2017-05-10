@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.jadru.themebrowser.ThemeActivity"
+    tools:showIn="@layout/activity_theme"
+    android:background="#EBEBEB">
+
+    <GridView
+        android:layout_height="match_parent"
+        android:id="@+id/gridView1"
+        android:layout_width="match_parent"
+        android:numColumns="auto_fit"
+        android:clipToPadding="false"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="55dp">
+    </GridView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/tagsearch" />
+
+    <ProgressBar
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/progresstheme"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+</RelativeLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory
+        android:key="setting_web_using"
+        android:title="@string/setting_title_1">
+        <EditTextPreference
+            android:key="homepage"
+            android:title="@string/setting_1_1"
+            android:summary="@string/setting_1_2"/>
+        <ListPreference
+            android:key="searchengine"
+            android:title="@string/setting_1_3"
+            android:summary="@string/setting_1_4"
+            android:entries="@array/Searchengines"
+            android:entryValues="@array/Searchenginesdata"
+            android:dialogTitle="@string/setting_1_3"
+            android:defaultValue="https://www.google.co.kr/search?q="/>
+        <CheckBoxPreference
+            android:key="sslagree"
+            android:title="@string/setting_1_7"
+            android:summary="@string/setting_1_8" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="setting_using_fast"
+        android:title="@string/setting_title_2">
+        <CheckBoxPreference
+            android:key="fullscreen"
+            android:title="@string/setting_2_1"
+            android:summary="@string/setting_2_2"/>
+        <SwitchPreference
+            android:key="t-black"
+            android:title="@string/setting_2_3"
+            android:summary="@string/setting_2_4"/>
+    </PreferenceCategory>
+</PreferenceScreen>

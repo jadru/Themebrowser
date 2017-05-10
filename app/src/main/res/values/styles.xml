@@ -1,0 +1,47 @@
+<resources>
+
+    <style name="Normal" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:colorBackground">#EBEBEB</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+    </style>
+
+    <style name="Normal.statusOver" parent="Normal"/>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Normal.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Normal.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="collapsedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowColor">#80FFFFFF</item>
+        <item name="android:shadowRadius">25</item>
+    </style>
+
+    <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:textColor">#FFF</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowDy">3</item>
+        <item name="android:shadowColor">#80000000</item>
+        <item name="android:shadowRadius">25</item>
+    </style>
+
+</resources>
