@@ -62,5 +62,6 @@
     <string name="setting_title_2">Easy using setting</string>
     <string name="setting_2_3">Icon color black</string>
     <string name="setting_2_4">Set icon as black</string>
+    <string name="title_activity_web">WebActivity</string>
 
 </resources>
