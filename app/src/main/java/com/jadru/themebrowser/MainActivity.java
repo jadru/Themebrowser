@@ -97,12 +97,9 @@ public class MainActivity extends AppCompatActivity {
     boolean pop1vib = false;
     boolean pop2vib = false;
     boolean pop3vib = false;
-    boolean yesorno = false;
-    private View 	decorView;
-    private int	uiOption;
-    EditText url_edit;
-    WebView webView;
-    ProgressBar progress;
+
+    private View decorView;
+
     TextView btn_url;
     Button btn_menu;
     Button btn_tab;
@@ -110,10 +107,19 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout actionbtns;
     RelativeLayout menu;
     RelativeLayout bg;
-    String homepagelink;
+
     SharedPreferences pref;
     String myOrigin;
+    String homepagelink;
     GeolocationPermissions.Callback myCallback;
+    EditText url_edit;
+    WebView webView;
+    ProgressBar progress;
+    private int uiOption;
+    boolean yesorno = false;
+    String searchengineurl;
+
+
     Button b1;
     Button b2;
     Button b3;
@@ -123,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     Button b7;
     Button b8;
     Button b9;
-    String searchengineurl;
+
     Animation fadepopon;
     Animation fadepopoff;
     boolean black;
@@ -203,10 +209,10 @@ public class MainActivity extends AppCompatActivity {
         bg = (RelativeLayout) findViewById(R.id.bg);
         btn_menu = (Button) findViewById(R.id.btn_menu);
         btn_url = (TextView) findViewById(R.id.btn_url);
-        btn_tab = (Button)findViewById(R.id.btn_tab);
+        btn_tab = (Button) findViewById(R.id.btn_tab);
         btn_tab.setVisibility(View.GONE);
-        btn_expand = (FloatingActionButton)findViewById(R.id.btn_expand);
-        actionbtns = (LinearLayout)findViewById(R.id.actionbtns);
+        btn_expand = (FloatingActionButton) findViewById(R.id.btn_expand);
+        actionbtns = (LinearLayout) findViewById(R.id.actionbtns);
         progress = (ProgressBar) findViewById(R.id.progressBar);
         menu = (RelativeLayout) findViewById(R.id.menu);
         popview = (RelativeLayout) findViewById(R.id.popview);
@@ -217,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
         poptext = (TextView) findViewById(R.id.poptext);
         popbottom = (RelativeLayout) findViewById(R.id.popBottom);
         popsitetitle = (TextView) findViewById(R.id.popsitetitle);
-        popviewui = (RelativeLayout)findViewById(R.id.popviewui);
+        popviewui = (RelativeLayout) findViewById(R.id.popviewui);
 
         fadepopon = AnimationUtils.loadAnimation(this, R.anim.fadeanim_popviewon);
         fadepopoff = AnimationUtils.loadAnimation(this, R.anim.fadeanim_popviewoff);
@@ -248,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         String url_before = pref.getString("url_before", "http://www.google.com");
 
         Uri url = getIntent().getData();
-        if (!(url==null)) {
+        if (!(url == null)) {
             webView.loadUrl(url.toString());
             Toast.makeText(this, getResources().getString(R.string.connectlink), Toast.LENGTH_SHORT).show();
         } else {
@@ -503,91 +509,91 @@ public class MainActivity extends AppCompatActivity {
                     oldx = (int) event.getRawX();
                     oldy = (int) event.getRawY();
                 }
-                    if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                        if (popview.getVisibility() == View.VISIBLE) {
-                            everyx = (int) event.getRawX();
-                            everyy = (int) event.getRawY();
-                            if (pop1rec.contains(everyx, everyy)) {
-                                if (!pop1vib) {
-                                    poptext.setVisibility(View.VISIBLE);
-                                    poptext.setText(getResources().getString(R.string.link_copy));
-                                    vibe.vibrate(40);
-                                    pop1vib = true;
-                                }
-                            } else if (pop2rec.contains(everyx, everyy)) {
-                                if (!pop2vib) {
-                                    poptext.setVisibility(View.VISIBLE);
-                                    poptext.setText(getResources().getString(R.string.link_open));
-                                    vibe.vibrate(40);
-                                    pop2vib = true;
-                                }
-                            } else if (pop3rec.contains(everyx, everyy)) {
-                                if (!pop3vib) {
-                                    poptext.setVisibility(View.VISIBLE);
-                                    poptext.setText(getResources().getString(R.string.link_share));
-                                    vibe.vibrate(40);
-                                    pop3vib = true;
-
-                                }
-                            } else {
-                                poptext.setVisibility(View.INVISIBLE);
-                                pop1vib = false;
-                                pop2vib = false;
-                                pop3vib = false;
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    if (popview.getVisibility() == View.VISIBLE) {
+                        everyx = (int) event.getRawX();
+                        everyy = (int) event.getRawY();
+                        if (pop1rec.contains(everyx, everyy)) {
+                            if (!pop1vib) {
+                                poptext.setVisibility(View.VISIBLE);
+                                poptext.setText(getResources().getString(R.string.link_copy));
+                                vibe.vibrate(40);
+                                pop1vib = true;
                             }
+                        } else if (pop2rec.contains(everyx, everyy)) {
+                            if (!pop2vib) {
+                                poptext.setVisibility(View.VISIBLE);
+                                poptext.setText(getResources().getString(R.string.link_open));
+                                vibe.vibrate(40);
+                                pop2vib = true;
+                            }
+                        } else if (pop3rec.contains(everyx, everyy)) {
+                            if (!pop3vib) {
+                                poptext.setVisibility(View.VISIBLE);
+                                poptext.setText(getResources().getString(R.string.link_share));
+                                vibe.vibrate(40);
+                                pop3vib = true;
+
+                            }
+                        } else {
+                            poptext.setVisibility(View.INVISIBLE);
+                            pop1vib = false;
+                            pop2vib = false;
+                            pop3vib = false;
                         }
                     }
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        if(popview.getVisibility() == View.VISIBLE) {
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                                int initialRadius = popviewui.getWidth();
-                                Animator animm = ViewAnimationUtils.createCircularReveal(popviewui, oldx, oldy, initialRadius, 0);
-                                animm.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        popview.setVisibility(View.INVISIBLE);
-                                        popwebView.loadUrl("about:blank");
-                                        if(popsitetitle.getText() == "about:blank"){
-                                            popsitetitle.setText("waiting...");
-                                        }
+                }
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (popview.getVisibility() == View.VISIBLE) {
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                            int initialRadius = popviewui.getWidth();
+                            Animator animm = ViewAnimationUtils.createCircularReveal(popviewui, oldx, oldy, initialRadius, 0);
+                            animm.addListener(new AnimatorListenerAdapter() {
+                                @Override
+                                public void onAnimationEnd(Animator animation) {
+                                    super.onAnimationEnd(animation);
+                                    popview.setVisibility(View.INVISIBLE);
+                                    popwebView.loadUrl("about:blank");
+                                    if (popsitetitle.getText() == "about:blank") {
+                                        popsitetitle.setText("waiting...");
                                     }
+                                }
 
-                                    @Override
-                                    public void onAnimationStart(Animator animation) {
-                                        super.onAnimationStart(animation);
-                                        popview.startAnimation(fadepopoff);
-                                        popwebView.setClickable(true);
-                                    }
-                                });
-                                animm.start();
-                            } else {
-                                popview.setVisibility(View.INVISIBLE);
-                                popwebView.loadUrl("about:blank");
-                                popview.startAnimation(fadepopoff);
-                                popwebView.setClickable(true);
-                            }
-                            if (pop1rec.contains(everyx, everyy)) {
-                                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                                ClipData clip = ClipData.newPlainText("url", longurl);
-                                clipboard.setPrimaryClip(clip);
-                            } else if (pop2rec.contains(everyx, everyy)) {
-                                webView.loadUrl(longurl);
-                            } else if (pop3rec.contains(everyx, everyy)) {
-                                Intent msgg = new Intent(Intent.ACTION_SEND);
-                                msgg.addCategory(Intent.CATEGORY_DEFAULT);
-                                msgg.putExtra(Intent.EXTRA_TEXT, longurl);
-                                msgg.setType("text/plain");
-                                startActivity(Intent.createChooser(msgg, getResources().getString(R.string.share) + " "));
-                            }
-                            btn_expand.setVisibility(View.VISIBLE);
-                            if(black){
-                                btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-                            }else{
-                                btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
-                            }
+                                @Override
+                                public void onAnimationStart(Animator animation) {
+                                    super.onAnimationStart(animation);
+                                    popview.startAnimation(fadepopoff);
+                                    popwebView.setClickable(true);
+                                }
+                            });
+                            animm.start();
+                        } else {
+                            popview.setVisibility(View.INVISIBLE);
+                            popwebView.loadUrl("about:blank");
+                            popview.startAnimation(fadepopoff);
+                            popwebView.setClickable(true);
+                        }
+                        if (pop1rec.contains(everyx, everyy)) {
+                            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                            ClipData clip = ClipData.newPlainText("url", longurl);
+                            clipboard.setPrimaryClip(clip);
+                        } else if (pop2rec.contains(everyx, everyy)) {
+                            webView.loadUrl(longurl);
+                        } else if (pop3rec.contains(everyx, everyy)) {
+                            Intent msgg = new Intent(Intent.ACTION_SEND);
+                            msgg.addCategory(Intent.CATEGORY_DEFAULT);
+                            msgg.putExtra(Intent.EXTRA_TEXT, longurl);
+                            msgg.setType("text/plain");
+                            startActivity(Intent.createChooser(msgg, getResources().getString(R.string.share) + " "));
+                        }
+                        btn_expand.setVisibility(View.VISIBLE);
+                        if (black) {
+                            btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
+                        } else {
+                            btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
                         }
                     }
+                }
                 if (popview.getVisibility() == View.VISIBLE) {
                     return true;
                 } else {
@@ -629,10 +635,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         Intent marketIntent = new Intent(Intent.ACTION_VIEW);
-                        marketIntent.setData(Uri.parse("market://details?id="+intent.getPackage()));
+                        marketIntent.setData(Uri.parse("market://details?id=" + intent.getPackage()));
                         startActivity(marketIntent);
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else if (url.startsWith("market://")) {
@@ -660,7 +666,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
             boolean sslagree = prefsdef.getBoolean("sslagree", false);
-            if(sslagree){
+            if (sslagree) {
                 AlertDialog.Builder alt_bld = new AlertDialog.Builder(MainActivity.this);
                 alt_bld.setMessage(getResources().getString(R.string.ssltitle)).setCancelable(
                         false)
@@ -691,14 +697,14 @@ public class MainActivity extends AppCompatActivity {
                 alert.setCanceledOnTouchOutside(false);
                 // Icon f
                 alert.show();
-            }else{
+            } else {
                 AlertDialog.Builder alt_bld = new AlertDialog.Builder(MainActivity.this);
                 alt_bld.setMessage(getResources().getString(R.string.ssltitle)).setCancelable(
                         false)
                         .setPositiveButton(getResources().getString(R.string.back),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                       webView.goBack();
+                                        webView.goBack();
                                     }
                                 });
                 AlertDialog alert = alt_bld.create();
@@ -822,10 +828,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         Intent marketIntent = new Intent(Intent.ACTION_VIEW);
-                        marketIntent.setData(Uri.parse("market://details?id="+intent.getPackage()));
+                        marketIntent.setData(Uri.parse("market://details?id=" + intent.getPackage()));
                         startActivity(marketIntent);
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else if (url.startsWith("market://")) {
@@ -867,7 +873,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setClickable(){
+    public void setClickable() {
         url_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -881,24 +887,24 @@ public class MainActivity extends AppCompatActivity {
 
         btn_expand.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                if(actionbtns.getVisibility() == View.INVISIBLE){
-                        actionbtns.setVisibility(View.VISIBLE);
-                        btn_url.setText(webView.getTitle());
-                        actionbtns.setVisibility(View.VISIBLE);
-                        imm.hideSoftInputFromWindow(url_edit.getWindowToken(), 0);
-                    if(black == true){
+                if (actionbtns.getVisibility() == View.INVISIBLE) {
+                    actionbtns.setVisibility(View.VISIBLE);
+                    btn_url.setText(webView.getTitle());
+                    actionbtns.setVisibility(View.VISIBLE);
+                    imm.hideSoftInputFromWindow(url_edit.getWindowToken(), 0);
+                    if (black == true) {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#464646")));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteiccancel));
-                    }else{
+                    } else {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackiccancel));
                     }
-                }else{
-                        actionbtns.setVisibility(View.INVISIBLE);
-                    if(black == true){
+                } else {
+                    actionbtns.setVisibility(View.INVISIBLE);
+                    if (black == true) {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-                    }else{
+                    } else {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
                     }
@@ -907,15 +913,18 @@ public class MainActivity extends AppCompatActivity {
         });
         btn_menu.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                if(menu.getVisibility() == View.INVISIBLE){
+                if (menu.getVisibility() == View.INVISIBLE) {
                     menuShowing(btn_menu);
-                }else{
+                } else {
                     menuHiding();
                 }
             }
         });
 
-        menu.setOnClickListener(new Button.OnClickListener() { public void onClick(View v) {}});
+        menu.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+            }
+        });
 
         btn_url.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -927,10 +936,10 @@ public class MainActivity extends AppCompatActivity {
                             ViewAnimationUtils.createCircularReveal(url_edit, cx, cy, 0, finalRadius);
                     url_edit.setVisibility(View.VISIBLE);
                     actionbtns.setVisibility(View.INVISIBLE);
-                    if(black == true){
+                    if (black == true) {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-                    }else{
+                    } else {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
                     }
@@ -938,10 +947,10 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     url_edit.setVisibility(View.VISIBLE);
                     actionbtns.setVisibility(View.INVISIBLE);
-                    if(black == true){
+                    if (black == true) {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-                    }else{
+                    } else {
                         btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                         btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
                     }
@@ -960,7 +969,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction(getResources().getString(R.string.btn_ok), new OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                webView.scrollTo(0,0);
+                                webView.scrollTo(0, 0);
                             }
                         }).show();
                 return true;
@@ -975,7 +984,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        url_edit.setOnKeyListener(new View.OnKeyListener(){
+        url_edit.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 // TODO Auto-generated method stub
                 if (event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -985,10 +994,10 @@ public class MainActivity extends AppCompatActivity {
                         if (strUrl.startsWith("http")) {
                             webView.loadUrl(strUrl);
                         } else if (strUrl.contains(".")) {
-                                strUrl = "http://" + strUrl;
-                                webView.loadUrl(strUrl);
+                            strUrl = "http://" + strUrl;
+                            webView.loadUrl(strUrl);
                         } else {
-                        strUrl = searchengineurl + strUrl;
+                            strUrl = searchengineurl + strUrl;
                             webView.loadUrl(strUrl);
                         }
                         imm.hideSoftInputFromWindow(url_edit.getWindowToken(), 0);
@@ -1000,9 +1009,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void menuHiding(){
-        if(menu.getVisibility()==View.VISIBLE){
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+    public void menuHiding() {
+        if (menu.getVisibility() == View.VISIBLE) {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 int initialRadius = menu.getWidth();
                 int cxx = (btn_menu.getRootView().getLeft() + btn_menu.getRootView().getRight()) / 2;
                 int cyy = (btn_menu.getRootView().getTop() + btn_menu.getRootView().getBottom());
@@ -1015,27 +1024,28 @@ public class MainActivity extends AppCompatActivity {
                         btn_url.setVisibility(View.VISIBLE);
                         actionbtns.setVisibility(View.INVISIBLE);
                         btn_expand.setVisibility(View.VISIBLE);
-                        if(black){
+                        if (black) {
                             btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                             btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-                        }else{
+                        } else {
                             btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                             btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
                         }
                     }
                 });
                 animm.start();
-        } else {
-            menu.setVisibility(View.INVISIBLE);
-            btn_url.setVisibility(View.VISIBLE);
-            actionbtns.setVisibility(View.INVISIBLE);
-            btn_expand.setVisibility(View.VISIBLE);
-            if(black){
-                btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-            }else{
-                btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
+            } else {
+                menu.setVisibility(View.INVISIBLE);
+                btn_url.setVisibility(View.VISIBLE);
+                actionbtns.setVisibility(View.INVISIBLE);
+                btn_expand.setVisibility(View.VISIBLE);
+                if (black) {
+                    btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
+                } else {
+                    btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
+                }
             }
-        }}
+        }
     }
 
     public void menuShowing(View vview) {
@@ -1060,10 +1070,10 @@ public class MainActivity extends AppCompatActivity {
             }
             imm.hideSoftInputFromWindow(url_edit.getWindowToken(), 0);
             anim.start();
-                Window window = getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(bgcolor);
-                getWindow().setNavigationBarColor(bgcolor);
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(bgcolor);
+            getWindow().setNavigationBarColor(bgcolor);
         } else {
             menu.setVisibility(View.VISIBLE);
             btn_url.setVisibility(View.INVISIBLE);
@@ -1079,7 +1089,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void touch3dShowing(final String url){
+    public void touch3dShowing(final String url) {
         popwebView.setClickable(false);
         popview.setBackgroundColor(Color.parseColor("#90FFFFFF"));
         actionbtns.setVisibility(View.INVISIBLE);
@@ -1112,7 +1122,7 @@ public class MainActivity extends AppCompatActivity {
         blurview.draw(cv);
         blurview.setDrawingCacheEnabled(false);
         blurview.destroyDrawingCache();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             final RenderScript rs = RenderScript.create(MainActivity.this);
             final Allocation input = Allocation.createFromBitmap(rs, mBitmap, Allocation.MipmapControl.MIPMAP_NONE,
                     Allocation.USAGE_SCRIPT);
@@ -1127,23 +1137,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkStoragePermission() {
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
-        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED
-                || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                // Explain to the user why we need to write the permission.
-                Toast.makeText(this, getResources().getString(R.string.permissionfordownload), Toast.LENGTH_SHORT).show();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED
+                    || checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    // Explain to the user why we need to write the permission.
+                    Toast.makeText(this, getResources().getString(R.string.permissionfordownload), Toast.LENGTH_SHORT).show();
+                }
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        MY_PERMISSION_REQUEST_STORAGE);
             }
-            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSION_REQUEST_STORAGE);
-        }
         }
     }
 
-    private void checkLocationPermission(){
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M) {
+    private void checkLocationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
                     != PackageManager.PERMISSION_GRANTED
                     || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -1152,13 +1162,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSION_REQUEST_LOCATION);
-            }else {
+            } else {
                 myCallback.invoke(myOrigin, true, false);
-                }
-        }else{
+            }
+        } else {
             boolean geoaccessno = pref.getBoolean("geono", false);
             boolean newgeoaccess = pref.getBoolean("geonew", true);
-            if(newgeoaccess){
+            if (newgeoaccess) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(getResources().getString(R.string.loactionagree_title));
                 builder.setMessage(getResources().getString(R.string.locationagree_text));
@@ -1182,17 +1192,17 @@ public class MainActivity extends AppCompatActivity {
                 });
                 AlertDialog alert = builder.create();
                 alert.show();
-            }else{
-            if(geoaccessno){
-                myCallback.invoke(myOrigin, false, false);
-            }else{
-                myCallback.invoke(myOrigin, true, false);
-            }
+            } else {
+                if (geoaccessno) {
+                    myCallback.invoke(myOrigin, false, false);
+                } else {
+                    myCallback.invoke(myOrigin, true, false);
+                }
             }
         }
     }
 
-    public void themeSkin(){
+    public void themeSkin() {
         int b1bg;
         int b2bg;
         int b3bg;
@@ -1208,15 +1218,15 @@ public class MainActivity extends AppCompatActivity {
         int btntabimg;
         Drawable d;
         Bitmap bitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory().getPath() + "/Themebrowser/themenow");
-        if(bitmap == null){
+        if (bitmap == null) {
             d = null;
-        }else {
+        } else {
             d = new BitmapDrawable(getResources(), bitmap);
         }
         //Bitmap resize = Bitmap.createScaledBitmap(bitmap, 300, 400, true);//사이즈 조절
         black = prefsdef.getBoolean("t-black", false);
         bgcolor = pref.getInt("t-color", Color.parseColor("#4dd0e1"));
-        if(black){
+        if (black) {
             btn_url.setTextColor(Color.parseColor("#FFFFFF"));
             b1bg = R.drawable.blackb1;
             b2bg = R.drawable.blackb2;
@@ -1234,7 +1244,7 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
-        }else{
+        } else {
             btn_url.setTextColor(Color.parseColor("#000000"));
             b1bg = R.drawable.whiteb1;
             b2bg = R.drawable.whiteb2;
@@ -1246,7 +1256,7 @@ public class MainActivity extends AppCompatActivity {
             b8bg = R.drawable.whiteb8;
             b9bg = R.drawable.whiteb9;
             expandbtncolor = R.drawable.whiteicexpand;
-            btnmenuimg =  R.drawable.whiteicmenu;
+            btnmenuimg = R.drawable.whiteicmenu;
             btntabimg = R.drawable.whiteictab;
             btnurlbg = R.drawable.whitebgurl;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -1258,33 +1268,34 @@ public class MainActivity extends AppCompatActivity {
         poptext.setBackgroundColor(Color.parseColor("#FFFFFF"));
         poptext.setTextColor(Color.parseColor("#464646"));
         popsitetitle.setTextColor(Color.parseColor("#000000"));
-        if(d==null){
+        if (d == null) {
             bg.setBackgroundColor(Color.parseColor("#4dd0e1"));
             menu.setBackgroundColor(Color.parseColor("#4dd0e1"));
-        }else{
+        } else {
             bg.setBackgroundDrawable(d);
             menu.setBackgroundDrawable(d);
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {;
-                pop1.setBackground(ContextCompat.getDrawable(this,R.drawable.content_copy_black_108x108));
-                pop2.setBackground(ContextCompat.getDrawable(this,R.drawable.open_in_browser_black_108x108));
-                pop3.setBackground(ContextCompat.getDrawable(this,R.drawable.share_black_108x108));
-                btn_menu.setBackground(ContextCompat.getDrawable(this,btnmenuimg));
-                btn_tab.setBackground(ContextCompat.getDrawable(this,btntabimg));
-                btn_url.setBackground(ContextCompat.getDrawable(this,btnurlbg));
-        }else{
-                pop1.setBackgroundDrawable(getResources().getDrawable(R.drawable.content_copy_black_108x108));
-                pop2.setBackgroundDrawable(getResources().getDrawable(R.drawable.open_in_browser_black_108x108));
-                pop3.setBackgroundDrawable(getResources().getDrawable(R.drawable.share_black_108x108));
-                btn_menu.setBackgroundDrawable(getResources().getDrawable(btnmenuimg));
-                btn_tab.setBackgroundDrawable(getResources().getDrawable(btntabimg));
-                btn_url.setBackgroundDrawable(getResources().getDrawable(btnurlbg));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ;
+            pop1.setBackground(ContextCompat.getDrawable(this, R.drawable.content_copy_black_108x108));
+            pop2.setBackground(ContextCompat.getDrawable(this, R.drawable.open_in_browser_black_108x108));
+            pop3.setBackground(ContextCompat.getDrawable(this, R.drawable.share_black_108x108));
+            btn_menu.setBackground(ContextCompat.getDrawable(this, btnmenuimg));
+            btn_tab.setBackground(ContextCompat.getDrawable(this, btntabimg));
+            btn_url.setBackground(ContextCompat.getDrawable(this, btnurlbg));
+        } else {
+            pop1.setBackgroundDrawable(getResources().getDrawable(R.drawable.content_copy_black_108x108));
+            pop2.setBackgroundDrawable(getResources().getDrawable(R.drawable.open_in_browser_black_108x108));
+            pop3.setBackgroundDrawable(getResources().getDrawable(R.drawable.share_black_108x108));
+            btn_menu.setBackgroundDrawable(getResources().getDrawable(btnmenuimg));
+            btn_tab.setBackgroundDrawable(getResources().getDrawable(btntabimg));
+            btn_url.setBackgroundDrawable(getResources().getDrawable(btnurlbg));
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Boolean blackorwhite = pref.getBoolean("t-black", false);
             if (blackorwhite) {
                 view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            }else{
+            } else {
                 view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             }
         }
@@ -1294,15 +1305,15 @@ public class MainActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             //window.setStatusBarColor(bgcolor);
             getWindow().setNavigationBarColor(bgcolor);
-            b1.setBackground(ContextCompat.getDrawable(this,b1bg));
-            b2.setBackground(ContextCompat.getDrawable(this,b2bg));
-            b3.setBackground(ContextCompat.getDrawable(this,b3bg));
-            b4.setBackground(ContextCompat.getDrawable(this,b4bg));
-            b5.setBackground(ContextCompat.getDrawable(this,b5bg));
-            b6.setBackground(ContextCompat.getDrawable(this,b6bg));
-            b7.setBackground(ContextCompat.getDrawable(this,b7bg));
-            b8.setBackground(ContextCompat.getDrawable(this,b8bg));
-            b9.setBackground(ContextCompat.getDrawable(this,b9bg));
+            b1.setBackground(ContextCompat.getDrawable(this, b1bg));
+            b2.setBackground(ContextCompat.getDrawable(this, b2bg));
+            b3.setBackground(ContextCompat.getDrawable(this, b3bg));
+            b4.setBackground(ContextCompat.getDrawable(this, b4bg));
+            b5.setBackground(ContextCompat.getDrawable(this, b5bg));
+            b6.setBackground(ContextCompat.getDrawable(this, b6bg));
+            b7.setBackground(ContextCompat.getDrawable(this, b7bg));
+            b8.setBackground(ContextCompat.getDrawable(this, b8bg));
+            b9.setBackground(ContextCompat.getDrawable(this, b9bg));
         } else {
             b1.setBackgroundDrawable(getResources().getDrawable(b1bg));
             b2.setBackgroundDrawable(getResources().getDrawable(b2bg));
@@ -1331,7 +1342,7 @@ public class MainActivity extends AppCompatActivity {
                         | DownloadManager.Request.NETWORK_MOBILE)
                 .setAllowedOverRoaming(false).setTitle(uRl)
                 .setDescription("Image")
-                .setDestinationInExternalPublicDir("/Download", uRl+"jpg");
+                .setDestinationInExternalPublicDir("/Download", uRl + "jpg");
         mgr.enqueue(request);
     }
 
@@ -1355,6 +1366,7 @@ public class MainActivity extends AppCompatActivity {
         super.onNewIntent(intent);
         setIntent(intent);
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -1371,17 +1383,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();
         setsettingsnow();
         themeSkin();
         CookieSyncManager.createInstance(this);
-        if(!(getIntent().getData() == null)){
+        if (!(getIntent().getData() == null)) {
             webView.loadUrl(getIntent().getData().toString());
         }
         menuHiding();
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -1392,9 +1406,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         String url_before = webView.getUrl();
         editor.putString("url_before", url_before);
-        editor.putInt("status_before",statusbarcolor);
+        editor.putInt("status_before", statusbarcolor);
         editor.apply();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -1402,37 +1417,40 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter completeFilter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         registerReceiver(completeReceiver, completeFilter);
         CookieSyncManager.getInstance().startSync();
-        if(!(getIntent().getData() == null)){
+        if (!(getIntent().getData() == null)) {
             webView.loadUrl(getIntent().getData().toString());
         }
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("status_before",statusbarcolor);
+        editor.putInt("status_before", statusbarcolor);
         editor.apply();
         setsettingsnow();
         themeSkin();
     }
+
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         String url_before = webView.getUrl();
         editor.putString("url_before", url_before);
-        editor.putInt("status_before",statusbarcolor);
+        editor.putInt("status_before", statusbarcolor);
         editor.apply();
         setsettingsnow();
     }
+
     @Override
-    public void onRestart(){
+    public void onRestart() {
         super.onRestart();
-        if(!(getIntent().getData() == null)){
+        if (!(getIntent().getData() == null)) {
             webView.loadUrl(getIntent().getData().toString());
         }
         menuHiding();
         setsettingsnow();
         themeSkin();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1443,26 +1461,28 @@ public class MainActivity extends AppCompatActivity {
             mUploadMsg = null;
         }
     }
+
     @Override
-    public void onConfigurationChanged(Configuration newConfig){
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         MediaPlayer player = new MediaPlayer();
         if (player.isPlaying()) {
             player.stop();
-        } else if (popview.getVisibility()==View.VISIBLE){
+        } else if (popview.getVisibility() == View.VISIBLE) {
             popview.setVisibility(View.INVISIBLE);
         } else if (menu.getVisibility() == View.VISIBLE) {
             menuHiding();
             return true;
         } else if (actionbtns.getVisibility() == View.VISIBLE) {
             actionbtns.setVisibility(View.INVISIBLE);
-            if(black){
+            if (black) {
                 btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                 btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.blackicexpand));
-            }else{
+            } else {
                 btn_expand.setBackgroundTintList(ColorStateList.valueOf(bgcolor));
                 btn_expand.setImageDrawable(getResources().getDrawable(R.drawable.whiteicexpand));
             }
@@ -1489,20 +1509,20 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }
-        if (keyCode == KeyEvent.KEYCODE_MENU){
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
             menuShowing(menu);
         }
         return super.onKeyDown(keyCode, event);
     }
 
-    public void setsettingsnow(){
+    public void setsettingsnow() {
         homepagelink = prefsdef.getString("homepage", "http://www.google.com");
         searchengineurl = prefsdef.getString("searchengine", "https://www.google.co.kr/search?q=");
-        if(!(homepagelink.contains("http"))){
+        if (!(homepagelink.contains("http"))) {
             homepagelink = "http://" + homepagelink;
         }
 
-        if(prefsdef.getBoolean("fullscreen", false)){
+        if (prefsdef.getBoolean("fullscreen", false)) {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
                     RelativeLayout.LayoutParams.MATCH_PARENT
@@ -1511,14 +1531,14 @@ public class MainActivity extends AppCompatActivity {
             webView.setLayoutParams(params);
             decorView = getWindow().getDecorView();
             uiOption = getWindow().getDecorView().getSystemUiVisibility();
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH)
                 uiOption |= View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
                 uiOption |= View.SYSTEM_UI_FLAG_FULLSCREEN;
-            if( Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
                 uiOption |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
-        }else{
-            uiOption |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN  |
+        } else {
+            uiOption |= View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -1633,12 +1653,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         // TODO Auto-generated method stub
         // super.onWindowFocusChanged(hasFocus);
 
-        if(prefsdef.getBoolean("fullscreen", false)) {
+        if (prefsdef.getBoolean("fullscreen", false)) {
             if (hasFocus) {
                 decorView.setSystemUiVisibility(uiOption);
             }
